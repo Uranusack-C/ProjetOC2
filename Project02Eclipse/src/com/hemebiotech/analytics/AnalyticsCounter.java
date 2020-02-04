@@ -1,43 +1,67 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
-public class AnalyticsCounter {
-	private static int headacheCount = 0;	// initialize to 0
-	private static int rashCount = 0;		// initialize to 0
-	private static int pupilCount = 0;		// initialize to 0
-	
-	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-		String line = reader.readLine();
+/**
+ * @author Uraa
+ * Count all occurence of symptoms and put it on a Map
+ */
+public class AnalyticsCounter
+{
+	/**
+	 * 
+	 * @param allSymptoms
+	 * 		List of all symptoms (duplicate)
+	 * @return 
+	 * 		Map of symptoms (no duplicate) + occurence
+	 *  
+	 */
+	public static Map<String, Long> countOccurence(List<String> allSymptoms)
+	{
+		Set<String> existingSymptoms	= new HashSet<>(allSymptoms);
 
-		int i = 0;	// set i to 0
-		int headCount = 0;	// counts headaches
-		while (line != null) {
-			i++;	// increment i
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headCount++;
-				System.out.println("number of headaches: " + headCount);
-			}
-			else if (line.equals("rush")) {
-				rashCount++;
-			}
-			else if (line.contains("pupils")) {
-				pupilCount++;
-			}
-
-			line = reader.readLine();	// get another symptom
-		}
-		
-		// next generate output
-		FileWriter writer = new FileWriter ("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
-		writer.close();
+		Map<String, Long> all			= new HashMap<String, Long>();
+		existingSymptoms.forEach( symptomName -> {
+				all.put(symptomName, allSymptoms.stream().filter(symptom -> symptom.equals(symptomName)).count());
+			});
+		return all;
 	}
+	
+	public static void output(Map<String, Long> Symptoms)
+	{
+		Map<String, Long> sortedMap	= new TreeMap<String, Long>(Symptoms);
+		Set<?> set2					= sortedMap.entrySet();
+		Iterator<?> iterator2		= set2.iterator();
+
+		try (FileWriter writer = new FileWriter("result.out");)
+		{
+			while (iterator2.hasNext())
+			{
+				Map.Entry me2 = (Map.Entry) iterator2.next();
+				writer.write(me2.getKey() + " = " + me2.getValue() + "\n");
+			}
+		} 
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+    public static void main(String[] args)
+    {
+    	ReadSymptomDataFromFile rsdff;
+    	Map<String, Long> myMap;
+
+    	rsdff	= new ReadSymptomDataFromFile("../Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application/Project02Eclipse/symptoms.txt");
+    	myMap	= AnalyticsCounter.countOccurence(rsdff.getSymptoms());
+    	output(myMap);
+    }
 }
