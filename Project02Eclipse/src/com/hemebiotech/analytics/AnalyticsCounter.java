@@ -24,7 +24,7 @@ public class AnalyticsCounter implements IAnalyticsCounter
 	{
 		Set<String> existingSymptoms	= new HashSet<>(allSymptoms);
 		Map<String, Long> all			= new HashMap<String, Long>();
-		existingSymptoms.forEach( symptomName ->
+		existingSymptoms.forEach(symptomName ->
 		{
 			all.put(symptomName, allSymptoms.stream().filter(symptom -> symptom.equals(symptomName)).count());
 		});
