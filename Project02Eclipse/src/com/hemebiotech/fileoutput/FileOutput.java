@@ -21,16 +21,16 @@ public class FileOutput
 	public static void output(Map<String, Long> Symptoms)
 	{
 		Map<String, Long> sortedMap	= new TreeMap<String, Long>(Symptoms);
-		Set<?> set2					= sortedMap.entrySet();
-		Iterator<?> iterator2		= set2.iterator();
+		Set<?> set					= sortedMap.entrySet();
+		Iterator<?> iterator		= set.iterator();
 
 		try (FileWriter writer = new FileWriter("result.out");)
 		{
-			while (iterator2.hasNext())
+			while (iterator.hasNext())
 			{
-				Map.Entry me2 = (Map.Entry) iterator2.next();
-				System.out.println("Ajout de [" + me2.getKey() + " = " + me2.getValue() +"]");
-				writer.write(me2.getKey() + " = " + me2.getValue() + "\n");
+				Map.Entry me = (Map.Entry) iterator.next();
+				System.out.println("Ajout de [" + me.getKey() + " = " + me.getValue() +"]"); // log
+				writer.write(me.getKey() + " = " + me.getValue() + "\n");
 				System.out.println();
 			}
 		} 
