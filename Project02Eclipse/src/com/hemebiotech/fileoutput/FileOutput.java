@@ -16,7 +16,7 @@ public class FileOutput
 {
 	/**
 	 * @param Symptoms
-	 * 			Map of symptoms (no duplicate) + occurrence
+	 * 		Map of symptoms (no duplicate) + occurrence
 	 */
 	public static void output(Map<String, Long> Symptoms)
 	{

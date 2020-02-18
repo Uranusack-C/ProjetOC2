@@ -7,6 +7,7 @@ import com.hemebiotech.reader.ISymptomReader;
 import com.hemebiotech.reader.ReadSymptomDataFromFile;
 
 /**
+ * 
  * @author Uraa
  * Principal function
  * instance of ReadSymptomDataFromFile, AnalyticsCounter
@@ -16,6 +17,7 @@ public class Launcher
 {
     /**
      * @param args
+     * 		do nothing
      */
     public static void main(String[] args)
     {
