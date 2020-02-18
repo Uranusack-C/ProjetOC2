@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Uraa
  * Count all occurence of symptoms and put it on a Map
  */
-public class AnalyticsCounter
+public class AnalyticsCounter implements IAnalyticsCounter
 {
 	/**
 	 * 
@@ -20,14 +20,14 @@ public class AnalyticsCounter
 	 * 		Map of symptoms (no duplicate) + occurence
 	 *  
 	 */
-	public static Map<String, Long> countOccurence(List<String> allSymptoms)
+	public Map<String, Long> countOccurence(List<String> allSymptoms)
 	{
 		Set<String> existingSymptoms	= new HashSet<>(allSymptoms);
-
 		Map<String, Long> all			= new HashMap<String, Long>();
-		existingSymptoms.forEach( symptomName -> {
-				all.put(symptomName, allSymptoms.stream().filter(symptom -> symptom.equals(symptomName)).count());
-			});
+		existingSymptoms.forEach( symptomName ->
+		{
+			all.put(symptomName, allSymptoms.stream().filter(symptom -> symptom.equals(symptomName)).count());
+		});
 		return all;
 	}
 }

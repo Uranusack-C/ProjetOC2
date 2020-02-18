@@ -1,4 +1,4 @@
-package com.hemebiotech.analytics;
+package com.hemebiotech.fileoutput;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,7 +29,9 @@ public class FileOutput
 			while (iterator2.hasNext())
 			{
 				Map.Entry me2 = (Map.Entry) iterator2.next();
+				System.out.println("Ajout de [" + me2.getKey() + " = " + me2.getValue() +"]");
 				writer.write(me2.getKey() + " = " + me2.getValue() + "\n");
+				System.out.println();
 			}
 		} 
 		catch (IOException e)
